@@ -45,6 +45,8 @@ session = Session(
 
 try
   @info String(read(`df`))
+catch ex
+  @info "df failed " ex
 end
 
 @info "training!"
@@ -53,6 +55,8 @@ resume!(session)
 
 try
   @info String(read(`df`))
+catch ex
+  @info "df failed " ex
 end
 
 
