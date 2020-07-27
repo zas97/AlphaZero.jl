@@ -67,7 +67,7 @@ function print(l::Logger, args...)
   args_nostyle = filter(args) do x
     !isa(x, Crayon)
   end
-  !isempty(args_nostyle) && @info string(args_nostyle...)
+  any(!isempty, args_nostyle) && @info string(args_nostyle...)
   if !l.console_only
     Base.println(l.logfile, args_nostyle...)
   end
