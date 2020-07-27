@@ -7,6 +7,10 @@
 # Enables running the script on a distant machine without an X server
 @everywhere ENV["GKSwstype"]="nul"
 
+@info "nthreads() = $(Threads.nthreads())"
+using Distributed
+@info "worker 1: nthreads() = $(fetch(@spawnat workers()[1] Threads.nthreads()))"
+
 @info "using AlphaZero"
 @everywhere using AlphaZero
 @info "used"
@@ -35,9 +39,18 @@ session = Session(
   autosave=true,
   save_intermediate=false)
 
+try
+  @info String(read(`df`))
+end
+
 @info "training!"
 resume!(session)
 @info "success!"
+
+try
+  @info String(read(`df`))
+end
+
 
 # -- output
 import Tar
@@ -47,4 +60,16 @@ import CodecZlib: GzipCompressor
 open("sessions.tar.gz", "w") do io
   Tar.create("sessions", TranscodingStream(GzipCompressor(), io))
 end
+try
+  @info String(read(`ls -lh sessions.tar.gz`))
+catch ex
+  @info "ls failed" ex
+end
+try
+  @info String(read(`du -sch sessions`))
+catch ex
+  @info "du failed" ex
+end
+
+
 ENV["RESULTS_FILE_TO_UPLOAD"] = "sessions.tar.gz"
