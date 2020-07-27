@@ -7,7 +7,7 @@
 # Enables running the script on a distant machine without an X server
 @everywhere ENV["GKSwstype"]="nul"
 
-using AlphaZero
+@everywhere using AlphaZero
 
 @everywhere const DUMMY_RUN = false
 @everywhere include("/home/jrun/AlphaZero.jl/scripts/lib/dummy_run.jl")
@@ -23,11 +23,23 @@ end
 session = Session(
   Game,
   Training.Network{Game},
-  params,
+  Params(params, num_iters=parse(Int, get(ENV, "num_iters", "10"))),
   Training.netparams,
   benchmark=benchmark,
   dir="sessions/connect-four",
   autosave=true,
   save_intermediate=false)
 
+@info "training!"
 resume!(session)
+@info "success!"
+
+# -- output
+import Tar
+import TranscodingStreams: TranscodingStream
+import CodecZlib: GzipCompressor
+
+open("sessions.tar.gz", "w") do io
+  Tar.create("sessions", TranscodingStream(GzipCompressor(), io))
+end
+ENV["RESULTS_FILE_TO_UPLOAD"] = "sessions.tar.gz"
