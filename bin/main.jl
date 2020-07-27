@@ -7,7 +7,9 @@
 # Enables running the script on a distant machine without an X server
 @everywhere ENV["GKSwstype"]="nul"
 
+@info "using AlphaZero"
 @everywhere using AlphaZero
+@info "used"
 
 @everywhere const DUMMY_RUN = false
 @everywhere include("/home/jrun/AlphaZero.jl/scripts/lib/dummy_run.jl")
@@ -20,6 +22,7 @@ if DUMMY_RUN
   params, benchmark = dummy_run_params(params, benchmark)
 end
 
+@info "creating session"
 session = Session(
   Game,
   Training.Network{Game},

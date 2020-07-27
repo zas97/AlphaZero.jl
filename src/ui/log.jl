@@ -64,12 +64,12 @@ end
 function print(l::Logger, args...)
   args = [repeat(" ", offset(l)), l.style, args..., crayon"reset"]
   Base.println(l.console, args...)
+  args_nostyle = filter(args) do x
+    !isa(x, Crayon)
+  end
+  @info string(args_nostyle...)
   if !l.console_only
-    args_nostyle = filter(args) do x
-      !isa(x, Crayon)
-    end
     Base.println(l.logfile, args_nostyle...)
-    @info string(args_nostyle...)
   end
   l.lastsep = false
   l.lastrow = false
