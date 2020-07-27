@@ -12,6 +12,7 @@
 @info "used"
 
 @everywhere const DUMMY_RUN = false
+# Use the Pkg.dir |> joinpath |> normpath
 @everywhere include("/home/jrun/AlphaZero.jl/scripts/lib/dummy_run.jl")
 
 @everywhere include("/home/jrun/AlphaZero.jl/games/connect-four/main.jl")
