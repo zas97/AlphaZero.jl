@@ -26,7 +26,7 @@ end
 session = Session(
   Game,
   Training.Network{Game},
-  Params(params, num_iters=parse(Int, get(ENV, "num_iters", "10"))),
+  params,
   Training.netparams,
   benchmark=benchmark,
   dir="sessions/connect-four",

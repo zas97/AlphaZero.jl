@@ -9,7 +9,7 @@ netparams = ResNetHP(
   batch_norm_momentum=0.1)
 
 self_play = SelfPlayParams(
-  num_games=4000,
+  num_games=parse(Int, get(ENV, "num_games", "4000")),
   num_workers=128,
   use_gpu=true,
   reset_mcts_every=4,
@@ -50,7 +50,7 @@ params = Params(
   arena=nothing, # skipping this part for the demo
   self_play=self_play,
   learning=learning,
-  num_iters=10, # for the demo, 10 iterations should be enough
+  num_iters=parse(Int, get(ENV, "num_iters", "10")), # for the demo, 10 iterations should be enough
   ternary_rewards=true,
   use_symmetries=true,
   memory_analysis=nothing, # removed for the demo for more parallelism
