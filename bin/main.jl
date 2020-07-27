@@ -12,10 +12,11 @@
 @info "used"
 
 @everywhere const DUMMY_RUN = false
-# Use the Pkg.dir |> joinpath |> normpath
-@everywhere include("/home/jrun/AlphaZero.jl/scripts/lib/dummy_run.jl")
 
-@everywhere include("/home/jrun/AlphaZero.jl/games/connect-four/main.jl")
+@everywhere import Pkg
+@everywhere include(normpath(joinpath(dirname(Pkg.pathof(AlphaZero)), "../scripts/lib/dummy_run.jl")))
+@everywhere include(normpath(joinpath(dirname(Pkg.pathof(AlphaZero)), "../games/connect-four/main.jl")))
+
 @everywhere using .ConnectFour: Game, Training
 
 params, benchmark = Training.params, Training.benchmark
