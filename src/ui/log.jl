@@ -69,6 +69,7 @@ function print(l::Logger, args...)
       !isa(x, Crayon)
     end
     Base.println(l.logfile, args_nostyle...)
+    @info string(args_nostyle...)
   end
   l.lastsep = false
   l.lastrow = false
