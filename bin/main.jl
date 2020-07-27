@@ -7,9 +7,13 @@
 # Enables running the script on a distant machine without an X server
 @everywhere ENV["GKSwstype"]="nul"
 
-@info "nthreads() = $(Threads.nthreads())"
 using Distributed
-@info "worker 1: nthreads() = $(fetch(@spawnat workers()[1] Threads.nthreads()))"
+try
+  @info "nthreads() = $(Threads.nthreads())"
+  @info "worker 1: nthreads() = $(fetch(@spawnat workers()[1] Threads.nthreads()))"
+catch ex
+  @info "nthreads failed " ex
+end
 
 @info "using AlphaZero"
 @everywhere using AlphaZero
