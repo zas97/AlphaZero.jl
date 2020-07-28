@@ -61,13 +61,8 @@ end
 
 
 # -- output
-import Tar
-import TranscodingStreams: TranscodingStream
-import CodecZlib: GzipCompressor
-
-open("sessions.tar.gz", "w") do io
-  Tar.create("sessions", TranscodingStream(GzipCompressor(), io))
-end
+@info "tar up"
+@info String(read(`tar czvf sessions.tar.gz sessions`))
 try
   @info String(read(`ls -lh sessions.tar.gz`))
 catch ex
