@@ -361,7 +361,9 @@ version = "0.8.3"
 
 [[Knet]]
 deps = ["AutoGrad", "CUDA", "FileIO", "JLD2", "Libdl", "LinearAlgebra", "NNlib", "Pkg", "Printf", "Random", "SpecialFunctions", "Statistics"]
-git-tree-sha1 = "af7b75234b5ccae33140a3a8945a8bf4ee7a53e3"
+git-tree-sha1 = "c4dd32ab759020b6bddf2647da37b11fa7c07fba"
+repo-rev = "master"
+repo-url = "https://github.com/denizyuret/Knet.jl"
 uuid = "1902f260-5fb4-5aff-8c31-6271790ab950"
 version = "1.4.1"
 
